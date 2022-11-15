@@ -11,15 +11,15 @@ jobs:
         uses: actions/checkout@v3
       - name: Install pip
         run: sudo apt install python3-pip
-      - name: Install requirementS
-        run: pip install -r requirment.txt
+      # - name: Install requirementS
+      #   run: pip install -r requirment.txt
       - name: Run Tests
         run: |
           python manage.py test
 
-      # - name: pip cache
-      #   script: |
-      #     mkdir .pip_cache
-      #     cache restore
-      #     pip install --cache-dir .pip_cache -r requirement.txt
-      #     cache store
+      - name: pip cache
+        script: |
+          mkdir .pip_cache
+          cache restore
+          pip install --cache-dir .pip_cache -r requirment.txt
+          cache store
