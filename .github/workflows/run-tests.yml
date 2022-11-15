@@ -1,4 +1,4 @@
-name: CI DOCKER 
+name: Run tests
 on: push
 jobs:
   execute_tests:
