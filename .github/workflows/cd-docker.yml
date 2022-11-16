@@ -1,0 +1,40 @@
+name: Cd-docker
+
+# Trigger deployment only on push to dev branch
+on:
+  push:
+    branches: [ main ]
+      
+
+jobs:
+  deploy:
+    name: Deploy to EC2 on master branch push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the files
+        uses: actions/checkout@v3
+
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ secrets.HOST }}
+          port: ${{ secrets.PORT }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          
+          script: |
+            cd /home/ubuntu/ffmpeg_video_convertingtoS3
+            pwd
+            git pull https://Muhammedshafeerali:${{secrets.TOKEN}}@github.com/Muhammedshafeerali/ffmpeg_video_convertingtoS3
+            docker-compose down
+            docker-compose build
+            docker-compose run web python3 manage.py makmigrations
+            docker-compose run web python3 manage.py migrate
+            docker-compose up
+
+
+
+
+
+    

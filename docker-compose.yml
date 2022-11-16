@@ -2,13 +2,17 @@ version: '3'
 
 services:
   web:
+    container_name: web
     build: .
     volumes:
       - static_vol:/app/static
       - media_vol:/app/media
     ports:
       - "8000:8000"
+    depends_on:
+      - db
   nginx:
+    container_name: nginx
     build: ./nginx
     volumes:
       - static_vol:/app/static
@@ -17,6 +21,8 @@ services:
       -  "80:80"
     depends_on:
       - web
+  db:
+    image: postgres
 
 volumes:
   static_vol:
