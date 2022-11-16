@@ -84,7 +84,6 @@ class homeView(APIView):
     permission_classes = [permissions.AllowAny]
 
     def get(self, request, *args, **kwargs):
-        content = {'Wellcome'}
+        content = {'Welcome to the dockerized django proj'}
         return Response(content, status=status.HTTP_200_OK)
-
 
