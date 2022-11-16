@@ -27,7 +27,8 @@ jobs:
             cd /home/ubuntu/ffmpeg_video_convertingtoS3
             pwd
             git pull https://Muhammedshafeerali:${{secrets.TOKEN}}@github.com/Muhammedshafeerali/ffmpeg_video_convertingtoS3
-            docker-compose down
+            docker stop $(docker ps -aq)
+            docker rm $(docker ps -aq)
             docker-compose build
             docker-compose run web python3 manage.py makmigrations
             docker-compose run web python3 manage.py migrate
